@@ -26,35 +26,33 @@ const Chats = () => {
             history.push('/')
             return
         }
-        axios.get("https://api.chatengine.io/users/me", {
-          headers: {
-            "project-id": "8639c2c3-55ea-4f75-88b2-a96743943550",
-            "user-name": user.name,
-            "user-secret": user.uid,
-          },
-        })
-        .then(() => {
+        axios
+          .get("https://api.chatengine.io/users/me", {
+            headers: {
+              "PRIVATE-KEY": "****",
+            },
+          })
+          .then(() => {
             setLoading(false);
-        })
-        .catch(() => {
-            const formdata = new FormData()
-            formdata.append('email', user.email);
-            formdata.append('username', user.email);
-            formdata.append('secret', user.uid);
-            getFile(user.photoURL)
-            .then((avatar) => {
-                formdata.append('avatar', avatar, avatar.name)
+          })
+          .catch(() => {
+            const formdata = new FormData();
+            formdata.append("email", user.email);
+            formdata.append("username", user.email);
+            formdata.append("secret", user.uid);
+            getFile(user.photoURL).then((avatar) => {
+              formdata.append("avatar", avatar, avatar.name);
 
-                axios
-                  .post("https://api.chatengine.io/users/", formdata, {
-                    headers: {
-                      "private-key": "207cceb7-9761-48d5-9311-87eb270ceed1",
-                    },
-                  })
-                  .then(() => setLoading(false))
-                  .catch((e) => console.error(e));
-            })
-        })
+              axios
+                .post("https://api.chatengine.io/users/", formdata, {
+                  headers: {
+                    "PRIVATE-KEY": "*****",
+                  },
+                })
+                .then(() => setLoading(false))
+                .catch((e) => console.error(e));
+            });
+          });
     },[user,history])
 
     if(!user || loading) return 'Loading...'
@@ -69,7 +67,7 @@ const Chats = () => {
         </div>
         <ChatEngine
           height="calc(100vh - 66px)"
-          projectID="8639c2c3-55ea-4f75-88b2-a96743943550"
+          projectID="****"
           userName={user.email}
           userSecret={user.uid}
         />
