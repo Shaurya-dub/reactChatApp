@@ -1,13 +1,30 @@
-import React from 'react';
+import React, {useRef, useState, useEffect} from 'react';
 import { useHistory } from 'react-router-dom';
 import {ChatEngine} from 'react-chat-engine';
 import {auth} from '../firebase'
+import { useAuth } from '../contexts/AuthContext';
+import axios from 'axios';
 const Chats = () => {
+    const {user} = useAuth();
+    console.log(user)
     const history = useHistory();
     const handleLogout = async () => {
         await auth.signOut();
-        history.pushState('/')
+        history.push('/')
     }
+    useEffect(() => {
+        if(!user) {
+            history.push('/')
+            return
+        }
+        axios.get('https://api.chatengine.io/users/me', {
+            headers: {
+                "project-id": "****",
+                "user-name": user.name,
+                "user-secret": user.uid
+            }
+        })
+    },[user,history])
     return (
         <div className="chats-page">
             <div className="nav-bar">
