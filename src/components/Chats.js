@@ -12,17 +12,44 @@ const Chats = () => {
         await auth.signOut();
         history.push('/')
     }
+
+    const getFile = async (url) => {
+        const response = await fetch(url);
+        const data = await response.blob();
+
+        return new File([data], "userPhoto.jpg", {type: 'image/jpeg'})
+    }
+
+    const [loading,setLoading] = useState(true);
     useEffect(() => {
         if(!user) {
             history.push('/')
             return
         }
-        axios.get('https://api.chatengine.io/users/me', {
-            headers: {
-                "project-id": "****",
-                "user-name": user.name,
-                "user-secret": user.uid
-            }
+        axios.get("https://api.chatengine.io/users/me", {
+          headers: {
+            "project-id": "8639c2c3-55ea-4f75-88b2-a96743943550",
+            "user-name": user.name,
+            "user-secret": user.uid,
+          },
+        })
+        .then(() => {
+            setLoading(false);
+        })
+        .catch(() => {
+            const formdata = new FormData()
+            formdata.append('email', user.email);
+            formdata.append('username', user.email);
+            formdata.append('secret', user.uid);
+            getFile(user.photoUrl)
+            .then((avatar) => {
+                formdata.append('avatar', avatar, avatar.name)
+
+                axios.post('https://api.chatengine.io/users',
+                formdata, {headers: {"private-key": "*********"}})
+                .then(() => setLoading(false))
+                .catch((e) => console.error(e))
+            })
         })
     },[user,history])
     return (
