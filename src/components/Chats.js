@@ -41,35 +41,40 @@ const Chats = () => {
             formdata.append('email', user.email);
             formdata.append('username', user.email);
             formdata.append('secret', user.uid);
-            getFile(user.photoUrl)
+            getFile(user.photoURL)
             .then((avatar) => {
                 formdata.append('avatar', avatar, avatar.name)
 
-                axios.post('https://api.chatengine.io/users',
-                formdata, {headers: {"private-key": "*********"}})
-                .then(() => setLoading(false))
-                .catch((e) => console.error(e))
+                axios
+                  .post("https://api.chatengine.io/users/", formdata, {
+                    headers: {
+                      "private-key": "207cceb7-9761-48d5-9311-87eb270ceed1",
+                    },
+                  })
+                  .then(() => setLoading(false))
+                  .catch((e) => console.error(e));
             })
         })
     },[user,history])
+
+    if(!user || loading) return 'Loading...'
+
     return (
-        <div className="chats-page">
-            <div className="nav-bar">
-                <div className="logo-tab">
-                    Unichat
-                </div>
-                <div onClick={handleLogout} className="logout-tab">
-                    Logout
-                </div>
-            </div>
-            <ChatEngine 
-            height='calc(100vh - 66px)'
-            projectId='*****'
-            userName = '.'
-            userSecret='.'
-            />
+      <div className="chats-page">
+        <div className="nav-bar">
+          <div className="logo-tab">Unichat</div>
+          <div onClick={handleLogout} className="logout-tab">
+            Logout
+          </div>
         </div>
-    )
+        <ChatEngine
+          height="calc(100vh - 66px)"
+          projectID="8639c2c3-55ea-4f75-88b2-a96743943550"
+          userName={user.email}
+          userSecret={user.uid}
+        />
+      </div>
+    );
 }
 
 export default Chats;
