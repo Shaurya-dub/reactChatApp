@@ -79,12 +79,25 @@
 }
 
 .facebook {
-  background-color: #3b5998;
+  background-color: #2a9d8f;
+  color: #e9c46a;
+  transition: all 0.3s linear;
+}
+
+.facebook:hover {
+  background-color: #e9c46a ;
+  color:#2a9d8f;
 }
 
 .google {
-  background-color: #4285f4;
-  color: white;
+  background-color: #e9c46a;
+  color: #264653;
+  transition: all 0.3s linear;
+}
+
+.google:hover {
+  color:#e9c46a;
+  background-color:#264653 ;
 }
 
 #loading-container {
