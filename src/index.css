@@ -19,7 +19,8 @@
 .nav-bar {
   width: 100%;
   height: 66px;
-  background-color: #f4a261;
+  ;
+  background-color: #e9c46a;
 }
 
 .logo-tab {
@@ -28,7 +29,7 @@
   top: 12px;
   font-size: 32px;
   font-weight: 700;
-  color: white;
+  color: #264653;
 }
 
 .logout-tab {
@@ -47,6 +48,25 @@
   background: transparent; /* Optional: just make scrollbar invisible */
 }
 
+/* custom css for Chat Component */
+.ce-message-date-text {
+  color: white !important;
+}
+#ce-feed-container {
+  background-color:#264653 !important;
+}
+
+.ce-my-message-bubble {
+background-color: #e9c46a !important;
+color:#264653 !important;
+}
+.ce-their-message-bubble {
+background-color: #2a9d8f !important;
+color:#264653 !important;
+}
+.ce-their-message-sender {
+color:white !important;
+}
 /* Login Page */
 
 #login-page {
